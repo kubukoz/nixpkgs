@@ -5016,7 +5016,7 @@ with pkgs;
 
   schildichat-desktop = callPackage ../applications/networking/instant-messengers/schildichat/schildichat-desktop.nix {
     inherit (darwin.apple_sdk.frameworks) Security AppKit CoreServices;
-    electron = electron_13;
+    electron = electron_15;
   };
   schildichat-desktop-wayland = writeScriptBin "schildichat-desktop" ''
     #!/bin/sh
@@ -7829,7 +7829,9 @@ with pkgs;
 
   mdp = callPackage ../applications/misc/mdp { };
 
-  mednafen = callPackage ../applications/emulators/mednafen { };
+  mednafen = callPackage ../applications/emulators/mednafen {
+    inherit (darwin) libiconv;
+  };
 
   mednafen-server = callPackage ../applications/emulators/mednafen/server.nix { };
 
@@ -15030,6 +15032,8 @@ with pkgs;
   gradle_7 = callPackage gradle-packages.gradle_7 { };
   gradle = gradle_7;
 
+  grcov = callPackage ../development/tools/misc/grcov { };
+
   gperf = callPackage ../development/tools/misc/gperf { };
   # 3.1 changed some parameters from int to size_t, leading to mismatches.
   gperf_3_0 = callPackage ../development/tools/misc/gperf/3.0.x.nix { };
@@ -19546,6 +19550,8 @@ with pkgs;
     buildPythonApplication click future six;
   };
 
+  pru = callPackage ../tools/text/pru { };
+
   prospector = callPackage ../development/tools/prospector { };
 
   protobuf = protobuf3_19;
@@ -20514,17 +20520,42 @@ with pkgs;
 
   wxGTK = wxGTK28;
 
-  wxGTK28 = callPackage ../development/libraries/wxwidgets/wxGTK28.nix { };
-  wxGTK29 = callPackage ../development/libraries/wxwidgets/wxGTK29.nix { };
-  wxGTK30 = callPackage ../development/libraries/wxwidgets/wxGTK30.nix { };
-  wxGTK31 = callPackage ../development/libraries/wxwidgets/wxGTK31.nix { };
-  wxmac = callPackage ../development/libraries/wxwidgets/wxmac30.nix { };
+  wxGTK30 = wxGTK30-gtk2;
+  wxGTK31 = wxGTK31-gtk2;
 
   wxGTK30-gtk2 = wxGTK30.override { withGtk2 = true; };
   wxGTK30-gtk3 = wxGTK30.override { withGtk2 = false; };
 
-  wxGTK31-gtk2 = wxGTK30.override { withGtk2 = true; };
-  wxGTK31-gtk3 = wxGTK30.override { withGtk2 = false; };
+  wxGTK29 = callPackage ../development/libraries/wxwidgets/2.9 {
+    inherit (darwin.stubs) setfile;
+    inherit (darwin.apple_sdk.frameworks) AGL Carbon Cocoa Kernel QuickTime;
+  };
+
+  wxGTK30-gtk2 = callPackage ../development/libraries/wxwidgets/3.0 {
+    withGtk2 = true;
+    inherit (darwin.stubs) setfile;
+    inherit (darwin.apple_sdk.frameworks) AGL Carbon Cocoa Kernel QTKit;
+  };
+
+  wxGTK30-gtk3 = callPackage ../development/libraries/wxwidgets/3.0 {
+    withGtk2 = false;
+    inherit (darwin.stubs) setfile;
+    inherit (darwin.apple_sdk.frameworks) AGL Carbon Cocoa Kernel QTKit;
+  };
+
+  wxGTK31-gtk2 = callPackage ../development/libraries/wxwidgets/3.1 {
+    withGtk2 = true;
+    inherit (darwin.stubs) setfile;
+    inherit (darwin.apple_sdk.frameworks) AGL Carbon Cocoa Kernel QTKit;
+  };
+
+  wxGTK31-gtk3 = callPackage ../development/libraries/wxwidgets/3.1 {
+    withGtk2 = false;
+    inherit (darwin.stubs) setfile;
+    inherit (darwin.apple_sdk.frameworks) AGL Carbon Cocoa Kernel QTKit;
+  };
+
+  wxmac = callPackage ../development/libraries/wxwidgets/3.0/mac.nix { };
 
   wxSVG = callPackage ../development/libraries/wxSVG {
     wxGTK = wxGTK30-gtk3;
@@ -29604,11 +29635,11 @@ with pkgs;
   vscode-fhs = vscode.fhs;
   vscode-fhsWithPackages = vscode.fhsWithPackages;
 
-  vscode-with-extensions = callPackage ../applications/editors/vscode/with-extensions.nix {};
+  vscode-with-extensions = callPackage ../applications/editors/vscode/with-extensions.nix { };
 
-  vscode-utils = callPackage ../misc/vscode-extensions/vscode-utils.nix {};
+  vscode-utils = callPackage ../applications/editors/vscode/extensions/vscode-utils.nix { };
 
-  vscode-extensions = recurseIntoAttrs (callPackage ../misc/vscode-extensions {});
+  vscode-extensions = recurseIntoAttrs (callPackage ../applications/editors/vscode/extensions { });
 
   vscodium = callPackage ../applications/editors/vscode/vscodium.nix { };
   vscodium-fhs = vscodium.fhs;
@@ -33177,6 +33208,8 @@ with pkgs;
 
   jstest-gtk = callPackage ../tools/misc/jstest-gtk { };
 
+  k40-whisperer = callPackage ../applications/misc/k40-whisperer { };
+
   keynav = callPackage ../tools/X11/keynav { };
 
   kgx = callPackage ../applications/terminal-emulators/kgx { };
@@ -33993,12 +34026,11 @@ with pkgs;
 
   viewnior = callPackage ../applications/graphics/viewnior { };
 
-
-  vimUtils = callPackage ../misc/vim-plugins/vim-utils.nix {
+  vimUtils = callPackage ../applications/editors/vim/plugins/vim-utils.nix {
     inherit (lua51Packages) hasLuaModule;
   };
 
-  vimPlugins = recurseIntoAttrs (callPackage ../misc/vim-plugins {
+  vimPlugins = recurseIntoAttrs (callPackage ../applications/editors/vim/plugins {
     llvmPackages = llvmPackages_6;
     luaPackages = lua51Packages;
   });

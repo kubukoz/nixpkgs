@@ -107807,11 +107807,11 @@ in
     bypassCache = true;
     reconstructLock = true;
   };
-  "markdown-preview-nvim-../../misc/vim-plugins/markdown-preview-nvim" = nodeEnv.buildNodePackage {
+  "markdown-preview-nvim-../../applications/editors/vim/plugins/markdown-preview-nvim" = nodeEnv.buildNodePackage {
     name = "markdown-preview-vim";
     packageName = "markdown-preview-vim";
     version = "0.0.1";
-    src = ../../misc/vim-plugins/markdown-preview-nvim;
+    src = ../../applications/editors/vim/plugins/markdown-preview-nvim;
     dependencies = [
       sources."accepts-1.3.8"
       sources."after-0.8.2"
@@ -118020,11 +118020,11 @@ in
     bypassCache = true;
     reconstructLock = true;
   };
-  "rust-analyzer-build-deps-../../misc/vscode-extensions/rust-analyzer/build-deps" = nodeEnv.buildNodePackage {
+  "rust-analyzer-build-deps-../../applications/editors/vscode/extensions/rust-analyzer/build-deps" = nodeEnv.buildNodePackage {
     name = "rust-analyzer";
     packageName = "rust-analyzer";
     version = "0.2.834";
-    src = ../../misc/vscode-extensions/rust-analyzer/build-deps;
+    src = ../../applications/editors/vscode/extensions/rust-analyzer/build-deps;
     dependencies = [
       sources."@babel/code-frame-7.12.11"
       sources."@babel/helper-validator-identifier-7.16.7"
@@ -129307,11 +129307,11 @@ in
     bypassCache = true;
     reconstructLock = true;
   };
-  "vscode-lldb-build-deps-../../misc/vscode-extensions/vscode-lldb/build-deps" = nodeEnv.buildNodePackage {
+  "vscode-lldb-build-deps-../../applications/editors/vscode/extensions/vscode-lldb/build-deps" = nodeEnv.buildNodePackage {
     name = "vscode-lldb";
     packageName = "vscode-lldb";
     version = "1.6.8";
-    src = ../../misc/vscode-extensions/vscode-lldb/build-deps;
+    src = ../../applications/editors/vscode/extensions/vscode-lldb/build-deps;
     dependencies = [
       sources."@discoveryjs/json-ext-0.5.6"
       sources."@types/eslint-8.4.1"
