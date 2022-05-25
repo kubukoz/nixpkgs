@@ -17,7 +17,9 @@ stdenv.mkDerivation rec {
   pname = "gmic";
   version = "3.0.0";
 
-  outputs = [ "out" "lib" "dev" "man" ];
+  outputs = [ "out" "lib" "dev"
+  # "man"
+  ];
 
   src = fetchurl {
     url = "https://gmic.eu/files/source/gmic_${version}.tar.gz";
@@ -45,6 +47,8 @@ stdenv.mkDerivation rec {
     "-DBUILD_LIB_STATIC=OFF"
     "-DENABLE_CURL=OFF"
     "-DENABLE_DYNAMIC_LINKING=ON"
+    "-DBUILD_MAN=OFF"
+    "-DBUILD_BASH_COMPLETION=OFF"
   ];
 
   meta = with lib; {

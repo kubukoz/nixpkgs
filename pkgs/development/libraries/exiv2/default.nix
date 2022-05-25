@@ -73,6 +73,7 @@ stdenv.mkDerivation rec {
       # Fix tests on arm
       # https://github.com/Exiv2/exiv2/issues/933
       rm -f ../tests/bugfixes/github/test_CVE_2018_12265.py
+      rm -f ../tests/bugfixes/redmine/test_issue_683.py
     ''}
 
     ${lib.optionalString stdenv.isDarwin ''

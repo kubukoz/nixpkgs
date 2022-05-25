@@ -119,6 +119,7 @@ stdenv.mkDerivation rec {
   ] ++ lib.optionals stdenv.isDarwin [
     "-DUSE_COLORD=OFF"
     "-DUSE_KWALLET=OFF"
+    "-DBUILD_SSE2_CODEPATHS=OFF"
   ];
 
   # darktable changed its rpath handling in commit
