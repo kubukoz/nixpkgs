@@ -1486,18 +1486,6 @@ let
         };
       };
 
-      kubukoz.nickel-syntax = buildVscodeMarketplaceExtension {
-        mktplcRef = {
-          name = "nickel-syntax";
-          publisher = "kubukoz";
-          version = "0.0.1";
-          sha256 = "010zn58j9kdb2jpxmlfyyyais51pwn7v2c5cfi4051ayd02b9n3s";
-        };
-        meta = {
-          license = lib.licenses.asl20;
-        };
-      };
-
       llvm-vs-code-extensions.vscode-clangd = buildVscodeMarketplaceExtension {
         mktplcRef = {
           name = "vscode-clangd";
@@ -2565,6 +2553,9 @@ let
       };
     };
 
+  generatedExtensions = self: super: lib.mapAttrs (_n: lib.recurseIntoAttrs)
+    (callPackage ./generated.nix { inherit buildVscodeMarketplaceExtension; });
+
   aliases = self: super: {
     # aliases
     ms-vscode = lib.recursiveUpdate super.ms-vscode { inherit (super.golang) go; };
@@ -2574,7 +2565,7 @@ let
   # then apply extension specific modifcations to packages.
 
   # overlays will be applied left to right, overrides should come after aliases.
-  overlays = lib.optionals config.allowAliases [ aliases ];
+  overlays = [generatedExtensions] ++ (lib.optionals config.allowAliases [ aliases ]);
 
   toFix = lib.foldl' (lib.flip lib.extends) baseExtensions overlays;
 in
