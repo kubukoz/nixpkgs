@@ -119,7 +119,11 @@ in rec {
       buildInputs = [
         pkgs.brotli
         (let
-          self = (pkgs.python3Minimal.override {
+          # python3Minimal can't be overridden with packages on Darwin, due to a missing framework.
+          # Instead of modifying stdenv, we take the easy way out, since most people on Darwin will
+          # just be hacking on the Nixpkgs manual (which also uses this mechanism).
+          python = if pkgs.stdenv.isDarwin then pkgs.python3 else pkgs.python3Minimal;
+          self = (python.override {
             inherit self;
             includeSiteCustomize = true;
            });
